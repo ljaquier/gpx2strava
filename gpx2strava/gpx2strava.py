@@ -3,7 +3,7 @@ from datetime import datetime
 import gpxpy
 from xml.etree.ElementTree import Element
 import requests
-import utils
+import gpx2strava.utils as utils
 
 
 @dataclass
