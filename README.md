@@ -29,7 +29,8 @@ Simple Python script/library that allows to create an activity on Strava from a 
 ## Usage
 As a script:
 ```bash
-python3 gpx2strava.py config.json activity.gpx
+pip3 install -r requirements.txt -t lib
+PYTHONPATH=./lib python3 gpx2strava/gpx2strava.py config.json activity.gpx
 ```
 
 As a library:

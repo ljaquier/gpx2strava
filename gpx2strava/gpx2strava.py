@@ -75,21 +75,3 @@ def upload_to_strava(access_token, gpx_content):
             "sport_type": next((ext.text for ext in gpx.metadata_extensions if ext.tag == 'sport_type'), None)
         }
     )
-
-
-if __name__ == "__main__":
-    import argparse
-
-    parser = argparse.ArgumentParser(description='Create activity on Strava from a GPX file')
-    parser.add_argument('config_file', nargs='?', help='Config file')
-    parser.add_argument('gpx_file', nargs='?', help='GPX file')
-
-    args = parser.parse_args()
-    if args.config_file and args.gpx_file:
-        config = utils.load_json(args.config_file)
-        with open(args.gpx_file) as f:
-            response = upload_to_strava(get_access_token(config), f.read())
-            print(f"{args.gpx_file} : {response.status_code} : {response.text}")
-        utils.save_json(args.config_file, config)
-    else:
-        parser.print_help()
