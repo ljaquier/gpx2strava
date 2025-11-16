@@ -8,5 +8,5 @@ setup(
     author_email='83839893+ljaquier@users.noreply.github.com',
     description='Simple Python script/library that allows to create an activity on Strava from a GPX file.',
     packages=find_packages(),    
-    install_requires=['gpxpy', 'requests']
+    install_requires=['gpxpy==1.6.2', 'requests==2.32.5']
 )

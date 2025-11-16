@@ -8,4 +8,3 @@ RUN pip install --no-cache-dir -r requirements.txt
 COPY *.py ./
 
 CMD [ "python", "./gpx2strava.py", "./config.json", "./activity.gpx" ]
-

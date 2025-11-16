@@ -1,2 +1,2 @@
-gpxpy
-requests
+gpxpy==1.6.2
+requests==2.32.5
