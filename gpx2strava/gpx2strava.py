@@ -1,7 +1,6 @@
 from dataclasses import dataclass
 from datetime import datetime
 import gpxpy
-from xml.etree.ElementTree import Element
 import requests
 import gpx2strava.utils as utils
 
@@ -16,15 +15,13 @@ class TrackPoint:
 def get_gpx(name, description, sport_type, track_points):
     gpx = gpxpy.gpx.GPX()
     gpx.creator='gpx2strava.py with barometer'
-    gpx.name=name
-    gpx.description=description
 
-    ext_sport_type = Element('sport_type')
-    ext_sport_type.text=sport_type
-    gpx.metadata_extensions=[ext_sport_type]
-    
     gpx_track = gpxpy.gpx.GPXTrack()
+    gpx_track.name=name
+    gpx_track.description=description
+    gpx_track.type=sport_type
     gpx.tracks.append(gpx_track)
+
     gpx_segment = gpxpy.gpx.GPXTrackSegment()
     gpx_track.segments.append(gpx_segment)
 
@@ -59,7 +56,7 @@ def get_access_token(config):
     return response["access_token"]
 
 def upload_to_strava(access_token, gpx_content):
-    gpx = gpxpy.parse(gpx_content)
+    gpx_track = gpxpy.parse(gpx_content).tracks[0]
     return requests.post(
         "https://www.strava.com/api/v3/uploads",
         headers={
@@ -69,9 +66,9 @@ def upload_to_strava(access_token, gpx_content):
             "file": ("activity.gpx", gpx_content, "application/gpx+xml")
         },
         data={
-            "name": gpx.name,
-            "description": gpx.description,
+            "name": gpx_track.name,
+            "description": gpx_track.description,
             "data_type": "gpx",
-            "sport_type": next((ext.text for ext in gpx.metadata_extensions if ext.tag == 'sport_type'), None)
+            "sport_type": gpx_track.type
         }
     )

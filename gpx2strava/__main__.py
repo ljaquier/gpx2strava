@@ -1,4 +1,4 @@
-# gpx2strava/__init__.py
+# gpx2strava/__main__.py
 
 if __name__ == "__main__":
     import argparse
