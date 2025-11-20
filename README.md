@@ -70,3 +70,29 @@ As a Docker container:
 docker build -t gpx2strava .
 docker run -it --rm -v config.json:/usr/src/app/config.json -v activity.gpx:/usr/src/app/activity.gpx --name gpx2strava gpx2strava
 ```
+
+## Specific GPX file format for this tool
+- Must contain one and only one track `<trk>`.
+- Must contain one track name `<name>` which will be the Strava activity name.
+- Must contain one track description `<desc>` which will be the Strava activity description. Can be multiline.
+- Must contain one track type `<type>` which will be the Strava activity sport type. One of [SportType](https://developers.strava.com/docs/reference/#api-models-SportType)
+- `<gpx creator="...">` must contain `with barometer` to force Strava to use the elevation.
+
+Example (Option 1 above)
+```xml
+<?xml version="1.0" encoding="UTF-8"?>
+<gpx xmlns="http://www.topografix.com/GPX/1/1" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.topografix.com/GPX/1/1 http://www.topografix.com/GPX/1/1/gpx.xsd" version="1.1" creator="gpx2strava.py with barometer">
+  <trk>
+    <name>A run</name>
+    <desc>A nice Morning run</desc>
+    <type>Running</type>
+    <trkseg>
+      <trkpt lat="42.234535" lon="7.233453">
+        <ele>1025.23</ele>
+        <time>2025-11-14T12:34:56Z</time>
+      </trkpt>
+      ...
+    </trkseg>
+  </trk>
+</gpx>
+```
