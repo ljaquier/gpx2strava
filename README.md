@@ -53,13 +53,13 @@ gpx = gpx2strava.get_gpx('A run', 'A nice Morning run', 'Running', [
     ...
 ])
 response = gpx2strava.upload_to_strava(access_token, gpx)
-print(f"{args.ctb_file} : {response.status_code} : {response.text}")
+print(f"{response.status_code} : {response.text}")
 
 # Option 2 : From a GPX file
 with open('activity.gpx') as f:
     gpx = f.read()
     response = gpx2strava.upload_to_strava(access_token, gpx)
-    print(f"{args.ctb_file} : {response.status_code} : {response.text}")
+    print(f"{response.status_code} : {response.text}")
 
 # Need to be saved to keep the new refresh token for the next execution
 utils.save_json('config.json', config)
